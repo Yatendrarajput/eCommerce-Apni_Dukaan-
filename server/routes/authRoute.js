@@ -1,12 +1,12 @@
 import express from 'express'
-import {registerController,loginController,testController,} from '../controllers/authcontroller.js'
-import { isAdmin, requireSignIn } from '../middleware/authMiddleware.js'
+import {registerController, loginController,testController} from '../controllers/authController.js'
+import { isAdmin, requireSignIn } from '../middleware/authMiddleware.js';
 //router object
 const router = express.Router()
 
 //routing
 //register || method POST
-router.post('/register', registerController)
+router.post('/register', registerController);
 
 //LOGIN || POST
 router.post('/login',loginController)
@@ -15,3 +15,4 @@ router.post('/login',loginController)
 router.get('/test', requireSignIn,isAdmin,testController);
 //there are two middlewares here in the fist one token is being checked, then admin is being checked
 export default router
+

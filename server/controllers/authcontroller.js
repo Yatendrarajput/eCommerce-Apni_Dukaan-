@@ -4,7 +4,7 @@ import JWT from "jsonwebtoken";
 
 //here we are importing data of user from usermodel and registering them
 
-export const registercontroller = async(req,res) => {
+export const registerController = async(req,res) => {
     try {
         const{name, email, password, phone, address}=req.body
         
