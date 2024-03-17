@@ -3,12 +3,13 @@
   "version": "1.0.0",
   "description": "Ecommerce rest api",
   "main": "server.js",
+  "type":"module",
   "scripts": {
     "start": "node server.js",
     "server": "nodemon server.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Pranjali",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.1.1",
