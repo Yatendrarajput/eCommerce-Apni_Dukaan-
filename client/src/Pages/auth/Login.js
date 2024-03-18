@@ -1,11 +1,11 @@
 import React,{useState} from 'react';
-import layout from '../../Components/Layout/layout';
+import Layout from '../../Components/Layout/layout';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import toast from "react-hot-toast";
 import "../../styles/authstyle.css"
 
-const login = () => {
+const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
   
@@ -69,4 +69,4 @@ const login = () => {
     );
   };
   
-export default login;
+export default Login;

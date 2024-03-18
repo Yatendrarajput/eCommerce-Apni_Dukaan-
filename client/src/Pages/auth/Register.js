@@ -1,11 +1,11 @@
 import React,{useState} from 'react'
-import layout from '../../Components/Layout/layout';
+import Layout from '../../Components/Layout/layout';
 import axios from "axios";
 import toast from "react-hot-toast";
 import {useNavigate} from 'react-router-dom';
 import "../../styles/authstyle.css";
 
- const register=() =>{
+ const Register=() =>{
     const [name, setName] = useState(""); 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -36,7 +36,7 @@ import "../../styles/authstyle.css";
     }
   };
   return (
-    <Layout title="Register - Ecommer App">
+    <Layout title="Register - Ecommerce App">
       <div className="form-container ">
         <form onSubmit={handleSubmit}>
           <h4 className="title">REGISTER FORM</h4>
@@ -47,7 +47,7 @@ import "../../styles/authstyle.css";
               onChange={(e) => setName(e.target.value)}
               className="form-control"
               id="exampleInputEmail1"
-              placeholder="Name"
+              placeholder="Enter your Name"
               required
               autoFocus
             />
@@ -104,4 +104,4 @@ import "../../styles/authstyle.css";
     </Layout>
   );
 };
-  export default register;
+  export default Register;
