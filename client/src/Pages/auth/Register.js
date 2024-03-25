@@ -1,6 +1,6 @@
 import React,{useState} from 'react'
 import Layout from '../../Components/Layout/layout';
-import axios from "axios";
+import axios from 'axios';
 import toast from "react-hot-toast";
 import {useNavigate} from 'react-router-dom';
 import "../../styles/authstyle.css";
@@ -17,7 +17,7 @@ import "../../styles/authstyle.css";
  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("/api/v1/auth/register", {
+      const res = await axios.post("/api/v1/auth/Register", {
         name,
         email,
         password,
@@ -26,7 +26,7 @@ import "../../styles/authstyle.css";
       });
       if (res && res.data.success) {
         toast.success(res.data && res.data.message);
-        navigate("/login");
+        navigate("/Login");
       } else {
         toast.error(res.data.message);
       }

@@ -4,8 +4,8 @@ import About from "./Pages/About";
 import Contact from "./Pages/Contact";
 import Policy from "./Pages/Policy";
 import PagenotFound from "./Pages/PagenotFound";
-import Login from "./Pages/auth/Login";
-import Register from "./Pages/auth/Register";
+import Login from "./Pages/auth/login";
+import Register from "./Pages/auth/register";
 function App() {
   return (
 
