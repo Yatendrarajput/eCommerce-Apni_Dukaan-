@@ -1,6 +1,10 @@
 import React,{useState} from 'react'
 import Layout from '../../Components/Layout/layout';
+<<<<<<< HEAD
 import axios from 'axios';
+=======
+import axios from "axios";
+>>>>>>> bd84ed608cce51345073c1d2a1718ae980455d3d
 import toast from "react-hot-toast";
 import {useNavigate} from 'react-router-dom';
 import "../../styles/authstyle.css";
@@ -13,8 +17,8 @@ import "../../styles/authstyle.css";
     const [address, setAddress] = useState("");
     const navigate = useNavigate();
  
- // form function
- const handleSubmit = async (e) => {
+  // form function
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const res = await axios.post("/api/v1/auth/Register", {
@@ -35,6 +39,7 @@ import "../../styles/authstyle.css";
       toast.error("Something went wrong");
     }
   };
+
   return (
     <Layout title="Register - Ecommerce App">
       <div className="form-container ">
@@ -46,8 +51,13 @@ import "../../styles/authstyle.css";
               value={name}
               onChange={(e) => setName(e.target.value)}
               className="form-control"
+<<<<<<< HEAD
               id="exampleInputEmail1"
               placeholder="Enter your Name"
+=======
+              id="exampleInputName"
+              placeholder="Enter Your Name"
+>>>>>>> bd84ed608cce51345073c1d2a1718ae980455d3d
               required
               autoFocus
             />
@@ -59,7 +69,7 @@ import "../../styles/authstyle.css";
               onChange={(e) => setEmail(e.target.value)}
               className="form-control"
               id="exampleInputEmail1"
-              placeholder="Email Address"
+              placeholder="Enter Your Email "
               required
             />
           </div>
@@ -70,18 +80,18 @@ import "../../styles/authstyle.css";
               onChange={(e) => setPassword(e.target.value)}
               className="form-control"
               id="exampleInputPassword1"
-              placeholder="Password"
+              placeholder="Enter Your Password"
               required
             />
           </div>
           <div className="mb-3">
             <input
               type="text"
-              value={phone}   
+              value={phone}
               onChange={(e) => setPhone(e.target.value)}
               className="form-control"
-              id="exampleInputEmail1"
-              placeholder="Enter your Phone Number"
+              id="exampleInputPhone"
+              placeholder="Enter Your Phone"
               required
             />
           </div>
@@ -91,7 +101,7 @@ import "../../styles/authstyle.css";
               value={address}
               onChange={(e) => setAddress(e.target.value)}
               className="form-control"
-              id="exampleInputEmail1"
+              id="exampleInputAddress"
               placeholder="Enter Your Address"
               required
             />
@@ -104,4 +114,9 @@ import "../../styles/authstyle.css";
     </Layout>
   );
 };
+<<<<<<< HEAD
   export default Register;
+=======
+
+export default Register;
+>>>>>>> bd84ed608cce51345073c1d2a1718ae980455d3d
