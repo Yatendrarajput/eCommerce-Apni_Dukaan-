@@ -46,7 +46,7 @@ export const registerController = async(req,res) => {
                 email,
                 phone,
                 address,
-                password: hashPassword,
+                password: hashedPassword,
             }).save();
             // password (key) and value is hashPassword that is the password that has been previously hashed
     
