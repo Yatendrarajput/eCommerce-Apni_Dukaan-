@@ -6,10 +6,10 @@ const router = express.Router()
 
 //routing
 //register || method POST
-router.post('/register', registerController);
+router.post('/Register', registerController);
 
 //LOGIN || POST
-router.post('/login',loginController)
+router.post('/Login',loginController)
 
 //test routes
 router.get('/test', requireSignIn,isAdmin,testController);

@@ -1,4 +1,3 @@
-import React, { useLayoutEffect } from 'react';
 import Header from './Header';
 import Footer from './Footer';
 import {Helmet} from "react-helmet";
