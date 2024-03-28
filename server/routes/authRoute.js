@@ -1,5 +1,5 @@
 import express from 'express'
-import { registerController,loginController,testController } from '../controllers/authcontroller.js'; 
+import { registerController,loginController,testController, forgotPasswordController } from '../controllers/authcontroller.js'; 
 import { isAdmin, requireSignIn } from '../middleware/authMiddleware.js';
 //router object
 const router = express.Router()
@@ -11,8 +11,12 @@ router.post('/Register', registerController);
 //LOGIN || POST
 router.post('/Login',loginController)
 
+//forgot password || POST
+router.post('/forgot-password',forgotPasswordController)
+
 //test routes
 router.get('/Test', requireSignIn,isAdmin,testController);
+
 //there are two middlewares here in the fist one token is being checked, then admin is being checked
 export default router
 
