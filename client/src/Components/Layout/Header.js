@@ -1,7 +1,21 @@
 import React from 'react'
-import { NavLink,Link } from 'react-router-dom'
-import { MdOutlineShoppingCart } from "react-icons/md";
+import { NavLink,Link } from 'react-router-dom';
+import { useAuth } from '../../context/auth';
+import toast from 'react-hot-toast';
 const Header = () => {
+  const [auth,setAuth] = useAuth();
+  const handleLogout =() =>{
+    //on logging out, local storage ko clear krna h and jo bhi user token show kr rh h usse bhi empt krna h
+    setAuth({
+      //spreading auth
+      ...auth,
+      //emptying the user
+      user:null,
+      token:''
+    })
+    localStorage.removeItem('auth');
+    toast.success("Logout Successfully");
+  };
   return (
     <>
 <nav className="navbar navbar-expand-lg bg-body-tertiary">
@@ -17,7 +31,7 @@ const Header = () => {
     </button>
     <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
       <Link to='/' className="navbar-brand" >
-      <MdOutlineShoppingCart/> E-Commerce App
+     
       </Link>
 
       <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
@@ -27,8 +41,12 @@ const Header = () => {
           </NavLink>
         </li>
 
-       
-        <li className="nav-item">
+       {
+        //if user doesnt exist toh login register dikhao
+        //if user exists then logout ka option do
+        //first condition for true next one for false
+        !auth.user ? (<>
+         <li className="nav-item">
           <NavLink to='/Register' className="nav-link" >
           Register
           </NavLink>
@@ -39,6 +57,15 @@ const Header = () => {
           Login
           </NavLink>
         </li>
+        </>): (<>
+          <li className="nav-item">
+          <NavLink onClick={handleLogout} to='/Login' className="nav-link" >
+          Logout
+          </NavLink>
+        </li>
+        </>)
+       }
+       
         
         <li className="nav-item">
           <NavLink to='/Category' className="nav-link" >

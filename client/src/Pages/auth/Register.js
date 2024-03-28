@@ -1,10 +1,6 @@
 import React,{useState} from 'react'
 import Layout from '../../Components/Layout/layout';
-<<<<<<< HEAD
-import axios from 'axios';
-=======
 import axios from "axios";
->>>>>>> bd84ed608cce51345073c1d2a1718ae980455d3d
 import toast from "react-hot-toast";
 import {useNavigate} from 'react-router-dom';
 import "../../styles/authstyle.css";
@@ -51,13 +47,8 @@ import "../../styles/authstyle.css";
               value={name}
               onChange={(e) => setName(e.target.value)}
               className="form-control"
-<<<<<<< HEAD
-              id="exampleInputEmail1"
-              placeholder="Enter your Name"
-=======
               id="exampleInputName"
               placeholder="Enter Your Name"
->>>>>>> bd84ed608cce51345073c1d2a1718ae980455d3d
               required
               autoFocus
             />
@@ -114,9 +105,5 @@ import "../../styles/authstyle.css";
     </Layout>
   );
 };
-<<<<<<< HEAD
-  export default Register;
-=======
 
 export default Register;
->>>>>>> bd84ed608cce51345073c1d2a1718ae980455d3d
