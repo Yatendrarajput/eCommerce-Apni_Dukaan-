@@ -1,17 +1,26 @@
 import JWT from "jsonwebtoken";
-
 //Protected route token base
-export const requireSignIn = async(req,res,next) => {
+export const requireSignIn = async(req, res, next) => {
     try {
-        const decode =JWT.verify(
-            req.header.authorization,
-            process.env.JWT_SECRET
-        );
-        req.user= decode;
+        // Ensure we're correctly accessing the Authorization header
+        // and properly handling cases where it might not be present.
+        if (!req.headers.authorization) {
+            return res.status(401).send({
+                success: false,
+                message: 'No token provided.'
+            });
+        }
+        const token = req.headers.authorization.split(' ')[1]; // Assuming the token is sent as "Bearer <token>"
+        const decoded = JWT.verify(token, process.env.JWT_SECRET);
+        req.user = decoded;
         next();
     } catch (error) {
         console.log(error);
-        
+        // Sending a response to avoid hanging the request
+        return res.status(401).send({
+            success: false,
+            message: 'Token verification failed.'
+        });
     }
 };
 
