@@ -29,8 +29,7 @@ const Login = () => {
           localStorage.setItem('auth',JSON.stringify(res.data));
           navigate("/"); //redirecting to home page
         } else {
-          toast.error(res.data.message); //error message given
-          
+          toast.error(res.data.message); //error message given  
         }
       } catch (error) {
         console.log(error);
