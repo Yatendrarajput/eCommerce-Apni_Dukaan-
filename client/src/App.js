@@ -7,12 +7,17 @@ import PagenotFound from "./Pages/PagenotFound";
 import Login from "./Pages/auth/Login";
 import Register from "./Pages/auth/Register";
 import ForgotPassword from "./Pages/auth/ForgotPassword";
+import Dashboard from "./Pages/user/Dashboard";
+import PrivateRoute from "./Components/Layout/Routes/Private";
 function App() {
   return (
 
     <>
     <Routes>
       <Route path="/" element={<HomePage/>} />
+      <Route path ="/Dashboard"  element={<PrivateRoute/>}>
+      <Route path="" element={<Dashboard/>} />
+      </Route>
       <Route path="/Register" element={<Register/>} />
       <Route path="/forgot-password" element={<ForgotPassword/>} />
       <Route path="/Login" element={<Login/>} />
