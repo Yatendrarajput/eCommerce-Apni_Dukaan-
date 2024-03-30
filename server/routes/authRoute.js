@@ -17,10 +17,15 @@ router.post('/forgot-password',forgotPasswordController)
 //test routes
 router.get('/Test', requireSignIn,isAdmin,testController);
 
-//protected route auth
+//protected User route auth
 router.get('/user-auth', requireSignIn ,(req,res) => {
     res.status(200).send({ok:true});
 });
+
+//protected Admin route auth
+// router.get('/Admin-auth', requireSignIn,isAdmin ,(req,res) => {
+//     res.status(200).send({ok:true});
+// });
 
 //there are two middlewares here in the fist one token is being checked, then admin is being checked
 export default router
