@@ -4,7 +4,7 @@ const Footer = () => {
   return (
     <div className='footer'>
     <h1 className='text-center'>
-     All Rights Reserved &copy; Yatendra
+     All Rights Reserved &copy; ShoPefY
     </h1>
 
     <p className='text-center mt-3'>
