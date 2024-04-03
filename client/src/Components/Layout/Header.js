@@ -40,6 +40,13 @@ const Header = () => {
           Home
           </NavLink>
         </li>
+        
+        <li className="nav-item">
+          <NavLink to='/Category' className="nav-link" >
+          Category
+          </NavLink>
+        </li>
+       
 
        {
         //if user doesnt exist toh login register dikhao
@@ -51,27 +58,31 @@ const Header = () => {
           Register
           </NavLink>
         </li>
-
+        
+         
         <li className="nav-item">
           <NavLink to='/Login' className="nav-link" >
           Login
           </NavLink>
         </li>
         </>): (<>
-          <li className="nav-item">
-          <NavLink onClick={handleLogout} to='/Login' className="nav-link" >
-          Logout
-          </NavLink>
-        </li>
+          <li className="nav-item dropdown">
+  <NavLink className="nav-link dropdown-toggle"
+    role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    {auth?.user?.name}
+  </NavLink>
+  <ul className="dropdown-menu">
+    <li>
+    <NavLink  to ={`/dashboard/${auth?.user?.role===1?"admin":"user"}`} className="dropdown-item"> Dashboard </NavLink>
+   
+    <NavLink onClick={handleLogout} to='/Login' className="dropdown-item"> Logout </NavLink>   
+    </li>
+  </ul>
+</li>
+
         </>)
        }
        
-        
-        <li className="nav-item">
-          <NavLink to='/Category' className="nav-link" >
-          Category
-          </NavLink>
-        </li>
         
         <li className="nav-item">
           <NavLink to='/Cart' className="nav-link" >

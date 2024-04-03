@@ -28,7 +28,7 @@ const Login = () => {
             token:res.data.token,
           });
           localStorage.setItem('auth',JSON.stringify(res.data));
-          navigate( location.state || "/"); 
+          navigate( location.state || "/"); //redirecting to home page
         } else {
           toast.error(res.data.message); //error message given  
         }
