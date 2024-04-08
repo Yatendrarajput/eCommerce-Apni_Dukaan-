@@ -176,3 +176,61 @@ export const updateProductController = async (req, res) => {
     });
   }
 };
+
+//search product
+export const searchProductController = async (req, res) => {
+  try {
+    const { keyword } = req.params;
+    //searching the documents in ProductModel where either the name field or description fiel matches the provided keyword
+    //for this $or is used
+    const results = await productModel
+      .find({
+        $or: [ //array formed
+        //options "i" makes it case insensitive
+          { name: { $regex: keyword, $options: "i" } },
+          { description: { $regex: keyword, $options: "i" } },
+        ],
+      })
+      //used to exclude the photo field form the query result
+      .select("-photo");
+      //sends JSON response
+    res.json(results);
+  } catch (error) {
+    console.log(error);
+    res.status(400).send({
+      success: false,
+      message: "Error In Search Product API",
+      error,
+    });
+  }
+};
+
+//similar products 
+export const relatedProductController = async (req, res) => {
+  try {
+    //destructure from params and get product id and category id
+    const { pid, cid } = req.params;
+    //then we find the conditional product from product model
+    const products = await productModel
+      .find({
+        category: cid,
+        _id: { $ne: pid }, //we use $ne for dont include this in similar products list as it is already being viewed here
+      })
+      .select("-photo") //remove photo
+      .limit(3) //kitne products show krwane hai similar products mai
+      .populate("category"); //show similar products on the basis of category
+    
+      //success message
+      res.status(200).send({
+      success: true,
+      products,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(400).send({
+      success: false,
+      message: "error while geting related product",
+      error,
+    });
+  }
+};

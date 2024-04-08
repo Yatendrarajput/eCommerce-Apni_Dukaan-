@@ -5,6 +5,8 @@ import {
   getProductController,
   getSingleProductController,
   productPhotoController,
+  relatedProductController,
+  searchProductController,
   updateProductController,
 } from "../controllers/productController.js";
 import { isAdmin, requireSignIn } from "../middleware/authMiddleware.js"
@@ -38,7 +40,14 @@ router.get("/get-product/:slug", getSingleProductController);
 //get photo
 router.get("/product-photo/:pid", productPhotoController);
 
-//delete rproduct
+//delete product
 router.delete("/product/:pid", deleteProductController);
+
+//search products
+router.get('/search/:keyword',searchProductController)
+//searching on the basis of keyword
+
+//similar product
+router.get('/related-product/:pid/:cid',relatedProductController);
 
 export default router;

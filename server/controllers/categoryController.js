@@ -18,7 +18,10 @@ export const createCategoryController = async(req,res)=>{
            }
            //if such category doest exist we save the category name entered
            
-           const category=await new categoryModel({name,slug:slugify(name)}).save()
+           const category = await new categoryModel({
+            name,
+            slug: slugify(name),
+          }).save();
             //we converted the name into a slug using slugify and saved
            res.status(201).send({
             success:true,
@@ -47,6 +50,7 @@ export const updateCategoryController = async(req,res) => {
             category,
         });
 
+
     } catch (error) {
         console.log(error)
         res.status(500).send({
@@ -57,6 +61,7 @@ export const updateCategoryController = async(req,res) => {
     }
 };
 //get all category
+
 
 export const categoryController =async(req,res)=>{
     try {
@@ -76,6 +81,7 @@ export const categoryController =async(req,res)=>{
 }
 };
 
+
 //get single category
 export const singleCategoryController= async(req,res) => {
     try {
@@ -85,6 +91,7 @@ export const singleCategoryController= async(req,res) => {
             message:"Got single category successfully",
             category,
         });
+
 
     } catch (error) {
         console.log(error)
@@ -96,8 +103,10 @@ export const singleCategoryController= async(req,res) => {
     }
 };
 
+
 //delete category
 export const deleteCategoryController = async (req,res)=> {
+
 
     try {
         const {id} = req.params
@@ -115,5 +124,6 @@ export const deleteCategoryController = async (req,res)=> {
             message:'Error while getting the category'
     })
     }
+
 
 };
