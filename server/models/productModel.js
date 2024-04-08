@@ -1,6 +1,8 @@
 import mongoose from "mongoose";
 
-const productSchema = new mongoose.Schema({
+const { Schema } = mongoose;
+
+const productSchema = new Schema({
     name: {
         type: String,
         required: true
@@ -18,9 +20,8 @@ const productSchema = new mongoose.Schema({
         required: true
     },
     category: {
-        type: mongoose.Schema.Types.ObjectId, // Corrected type definition
-        ref: 'Category',
-        required: true
+        type: Schema.Types.ObjectId, // Use Schema.Types.ObjectId for type
+        ref: 'Category' // Reference to the 'Category' model
     },
     quantity: {
         type: Number,
@@ -35,4 +36,4 @@ const productSchema = new mongoose.Schema({
     }
 }, { timestamps: true });
 
-export default mongoose.model('Product', productSchema); // Changed model name to singular ('Product')
+export default mongoose.model('Product', productSchema);
