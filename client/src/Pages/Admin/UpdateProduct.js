@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useAuth } from "../../context/auth";
 import Layout from "../../Components/Layout/layout";
 import AdminMenu from "../../Components/Layout/AdminMenu";
 import toast from "react-hot-toast"; 
@@ -6,6 +7,7 @@ import axios from "axios";
 import { Select } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
 const { Option } = Select;
+
 
 const UpdateProduct = () => {
   const navigate = useNavigate();
@@ -19,7 +21,7 @@ const UpdateProduct = () => {
   const [shipping, setShipping] = useState("");
   const [photo, setPhoto] = useState("");
   const [id, setId] = useState("");
-
+  const [auth]=useAuth();
   //get single product
   const getSingleProduct = async () => {
     try {
@@ -70,14 +72,25 @@ const UpdateProduct = () => {
       productData.append("quantity", quantity);
       photo && productData.append("photo", photo);
       productData.append("category", category);
-      const { data } = axios.put(
+      
+      // Fetch the token from local storage or wherever you store it
+      
+      
+      const { data } = await axios.put(
         `/api/v1/product/update-product/${id}`,
-        productData
+        productData,
+        {
+          headers: {
+            Authorization: `Bearer ${auth.token}` // Include the token in the headers
+          }
+        }
       );
+      
       if (data?.success) {
-        toast.error(data?.message);
-      } else {
         toast.success("Product Updated Successfully");
+       
+      } else {
+        toast.error(data?.message);
         navigate("/dashboard/admin/products");
       }
     } catch (error) {
@@ -85,14 +98,20 @@ const UpdateProduct = () => {
       toast.error("something went wrong");
     }
   };
-
+  
   //delete a product
   const handleDelete = async () => {
     try {
       let answer = window.prompt("Are you sure you want to delete this product ? ");
+      
       if (!answer) return;
       const { data } = await axios.delete(
-        `/api/v1/product/delete-product/${id}`
+        `/api/v1/product/delete-product/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${auth.token}` // Include the token in the headers
+          }
+        }
       );
       toast.success("Product Deleted Succfully");
       navigate("/dashboard/admin/products");
