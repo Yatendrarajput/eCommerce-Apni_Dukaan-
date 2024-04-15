@@ -79,7 +79,7 @@ export const loginController =async(req,res) =>{
         if(!email|| !password){
         return res.status(404).send({
             success:false,
-            message:'Invalid email or password'
+            message:'Email cannot be empty'
     })
         }
         //abb agar humme successfully email mil gya toh hum password ki validity check krenge
@@ -99,6 +99,7 @@ export const loginController =async(req,res) =>{
                 success:false,
                 message:'Invalid Password'
             })
+            
         }
         //creating token
         const token = await JWT.sign({_id:user._id}, process.env.JWT_SECRET,{expiresIn:'7d'});
@@ -170,5 +171,3 @@ export const forgotPasswordController= async(req,res)=>{
 export const testController = (req,res) =>{
     res.send('Protected Routes');
 }
-
-  
