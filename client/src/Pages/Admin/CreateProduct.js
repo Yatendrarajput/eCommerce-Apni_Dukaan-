@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import axios from "axios";
 import { Select } from "antd";
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/auth';
 
 const { Option } = Select;
 
@@ -18,7 +19,7 @@ const CreateProduct = () => {
   const [quantity, setQuantity] = useState("");
   const [shipping, setShipping] = useState("");
   const [photo, setPhoto] = useState("");
-
+  const[auth]= useAuth();
    //get all category
    const getAllCategory = async () => {
     try {
@@ -48,7 +49,12 @@ const CreateProduct = () => {
       productData.append("category", category);
       const { data } = axios.post(
         "/api/v1/product/create-product",
-        productData
+        productData,
+        {
+          headers: {
+            Authorization: `Bearer ${auth.token}` // Include the token in the headers
+          }
+        }
       );
       if (data?.success) {
         toast.error(data?.message);

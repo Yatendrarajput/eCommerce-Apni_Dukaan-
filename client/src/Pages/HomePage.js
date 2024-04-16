@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Layout from '../Components/Layout/layout'
 import { useNavigate } from "react-router-dom";
-import { Axios } from 'axios';
+import axios from "axios";
+import{Checkbox,Radio} from "antd";
+import {Prices} from "./../Components/Prices"
 const HomePage = () => {
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
@@ -9,8 +11,9 @@ const HomePage = () => {
   const [checked, setChecked] = useState([]);
   const [radio, setRadio] = useState([]);
   const [total, setTotal] = useState(0);
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(1); //initially ek page hoga
   const [loading, setLoading] = useState(false);
+
 
   //get all cat
   const getAllCategory = async () => {
@@ -44,7 +47,7 @@ const HomePage = () => {
   //getTOtal COunt
   const getTotal = async () => {
     try {
-      const { data } = await axios.get("/api/v1/product/product-count");
+      const { data } = await axios.get("/api/v1/product/product-count"); //api ke through netwrok request bhejenge
       setTotal(data?.total);
     } catch (error) {
       console.log(error);
@@ -61,6 +64,7 @@ const HomePage = () => {
       setLoading(true);
       const { data } = await axios.get(`/api/v1/product/product-list/${page}`);
       setLoading(false);
+      //array of products, then spread data praducts
       setProducts([...products, ...data?.products]);
     } catch (error) {
       console.log(error);
@@ -162,7 +166,7 @@ const HomePage = () => {
               </div>
             ))}
           </div>
-          <div className="m-2 p-3">
+          <div className="m-2 p-3"> 
             {products && products.length < total && (
               <button
                 className="btn btn-warning"
@@ -182,4 +186,4 @@ const HomePage = () => {
 };
 
 
-export default HomePage
+export default HomePage;
