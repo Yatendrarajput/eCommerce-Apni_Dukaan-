@@ -177,8 +177,6 @@ export const updateProductController = async (req, res) => {
   }
 };
 
-<<<<<<< HEAD
-=======
 //search product
 export const searchProductController = async (req, res) => {
   try {
@@ -236,7 +234,6 @@ export const relatedProductController = async (req, res) => {
     });
   }
 };
->>>>>>> aa783d76f93c0526a8b04847191b353e482e4d5f
 /// filters
 export const productFiltersController = async (req, res) => {
   try {
@@ -257,9 +254,6 @@ export const productFiltersController = async (req, res) => {
       error,
     });
   }
-<<<<<<< HEAD
-};
-=======
 };
 
 // product count
@@ -283,7 +277,7 @@ export const productCountController = async (req, res) => {
 // product list base on page
 export const productListController = async (req, res) => {
   try {
-    const perPage = 6; //products shown per page
+    const perPage = 2; //products shown per page
     const page = req.params.page ? req.params.page : 1; //agar page nhi milta hai toh default page 1 hoga
     const products = await productModel
       .find({})
@@ -305,4 +299,3 @@ export const productListController = async (req, res) => {
   }
 };
 
->>>>>>> aa783d76f93c0526a8b04847191b353e482e4d5f
