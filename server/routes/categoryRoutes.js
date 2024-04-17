@@ -11,11 +11,14 @@ router.post('/create-category',requireSignIn,isAdmin,createCategoryController);
 //update category
 router.put('/update-category/:id',requireSignIn,isAdmin,updateCategoryController)
 
+
 //get all categories
 router.get('/get-category',categoryController)
 
+
 //get a single category
 router.get('/single-category/:slug',singleCategoryController)
+
 
 //delete category
 router.delete('/delete-category/:id',requireSignIn,isAdmin,deleteCategoryController)

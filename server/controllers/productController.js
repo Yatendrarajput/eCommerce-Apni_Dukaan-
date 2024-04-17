@@ -177,6 +177,66 @@ export const updateProductController = async (req, res) => {
   }
 };
 
+<<<<<<< HEAD
+=======
+//search product
+export const searchProductController = async (req, res) => {
+  try {
+    const { keyword } = req.params;
+    //searching the documents in ProductModel where either the name field or description fiel matches the provided keyword
+    //for this $or is used
+    const results = await productModel
+      .find({
+        $or: [ //array formed
+        //options "i" makes it case insensitive
+          { name: { $regex: keyword, $options: "i" } },
+          { description: { $regex: keyword, $options: "i" } },
+        ],
+      })
+      //used to exclude the photo field form the query result
+      .select("-photo");
+      //sends JSON response
+    res.json(results);
+  } catch (error) {
+    console.log(error);
+    res.status(400).send({
+      success: false,
+      message: "Error In Search Product API",
+      error,
+    });
+  }
+};
+
+//similar products 
+export const relatedProductController = async (req, res) => {
+  try {
+    //destructure from params and get product id and category id
+    const { pid, cid } = req.params;
+    //then we find the conditional product from product model
+    const products = await productModel
+      .find({
+        category: cid,
+        _id: { $ne: pid }, //we use $ne for dont include this in similar products list as it is already being viewed here
+      })
+      .select("-photo") //remove photo
+      .limit(3) //kitne products show krwane hai similar products mai
+      .populate("category"); //show similar products on the basis of category
+    
+      //success message
+      res.status(200).send({
+      success: true,
+      products,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(400).send({
+      success: false,
+      message: "error while getting related product",
+      error,
+    });
+  }
+};
+>>>>>>> aa783d76f93c0526a8b04847191b353e482e4d5f
 /// filters
 export const productFiltersController = async (req, res) => {
   try {
@@ -197,4 +257,52 @@ export const productFiltersController = async (req, res) => {
       error,
     });
   }
+<<<<<<< HEAD
 };
+=======
+};
+
+// product count
+export const productCountController = async (req, res) => {
+  try {
+    const total = await productModel.find({}).estimatedDocumentCount();
+    res.status(200).send({
+      success: true,
+      total,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(400).send({
+      message: "Error in product count",
+      error,
+      success: false,
+    });
+  }
+};
+
+// product list base on page
+export const productListController = async (req, res) => {
+  try {
+    const perPage = 6; //products shown per page
+    const page = req.params.page ? req.params.page : 1; //agar page nhi milta hai toh default page 1 hoga
+    const products = await productModel
+      .find({})
+      .select("-photo") //deselecting photo
+      .skip((page - 1) * perPage) //kese skip functions are achieved from mongo
+      .limit(perPage) 
+      .sort({ createdAt: -1 });
+    res.status(200).send({
+      success: true,
+      products,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(400).send({
+      success: false,
+      message: "error in per page ctrl",
+      error,
+    });
+  }
+};
+
+>>>>>>> aa783d76f93c0526a8b04847191b353e482e4d5f
