@@ -5,8 +5,12 @@ import {
   getProductController,
   getSingleProductController,
   productPhotoController,
+  relatedProductController,
+  searchProductController,
   updateProductController,
-  productFiltersController
+  productFiltersController,
+  productCountController,
+  productListController
 } from "../controllers/productController.js";
 import { isAdmin, requireSignIn } from "../middleware/authMiddleware.js"
 import formidable from "express-formidable";
@@ -39,6 +43,24 @@ router.get("/get-product/:slug", getSingleProductController);
 //get photo
 router.get("/product-photo/:pid", productPhotoController);
 
+//delete product
+router.delete("/product/:pid", deleteProductController);
+
+//search products
+router.get('/search/:keyword',searchProductController)
+//searching on the basis of keyword
+
+//similar product
+router.get('/related-product/:pid/:cid',relatedProductController);
+
+//filter
+router.post("/product-filters",productFiltersController);
+
+//product count
+router.get('/product-count',productCountController);
+
+//product per page
+router.get('/product-list/:page',productListController);
 //delete rproduct
 router.delete("/delete-product/:pid", deleteProductController);
 //filter
