@@ -4,7 +4,10 @@ import { useAuth } from '../../context/auth';
 import toast from 'react-hot-toast';
 import SearchInput from './Form/searchInput';
 import useCategory from '../../hooks/useCategory';
+import { useCart } from '../../context/cart';
+import { Badge } from 'antd';
 const Header = () => {
+  const [cart]= useCart();
   const [auth,setAuth] = useAuth();
   const categories =useCategory();
   const handleLogout =() =>{
@@ -34,7 +37,7 @@ const Header = () => {
     </button>
     <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
       <Link to='/' className="navbar-brand" >
-     
+      Shopfy
       </Link>
 
       <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
@@ -103,12 +106,13 @@ const Header = () => {
         </>)
        }
        
-        
-        <li className="nav-item">
-          <NavLink to='/Cart' className="nav-link" >
-          Cart[0]
-          </NavLink>
-        </li>
+       <li className="nav-item">
+                <NavLink to='/Cart' className="nav-link">
+                  <Badge count={cart?.length} showZero>
+                    Cart
+                  </Badge>
+                </NavLink>
+              </li>
       </ul>
     </div>
   </div>
