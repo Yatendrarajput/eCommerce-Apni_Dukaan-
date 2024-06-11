@@ -4,7 +4,7 @@ import UserMenu from '../../Components/Layout/UserMenu';
 import { useAuth } from "../../context/auth";
 import toast from "react-hot-toast";
 import axios from "axios";
-//import { Layout } from "antd";
+
 const Profile = () => {
   //context
   const [auth, setAuth] = useAuth();
@@ -28,13 +28,21 @@ const Profile = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axios.put("/api/v1/auth/profile", {
-        name,
-        email,
-        password,
-        phone,
-        address,
-      });
+      const { data } = await axios.put(
+        "/api/v1/auth/profile",
+        {
+          name,
+          email,
+          password,
+          phone,
+          address,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${auth?.token}`, // Include the token in the Authorization header
+          },
+        }
+      );
       if (data?.error) {
         toast.error(data?.error);
       } else {
@@ -50,6 +58,7 @@ const Profile = () => {
       toast.error("Something went wrong");
     }
   };
+
   return (
     <Layout title={"Your Profile"}>
       <div className="container-fluid m-3 p-3">
@@ -58,7 +67,7 @@ const Profile = () => {
             <UserMenu />
           </div>
           <div className="col-md-9">
-            <div className="form-container ">
+            <div className="form-container">
               <form onSubmit={handleSubmit}>
                 <h4 className="title">USER PROFILE</h4>
                 <div className="mb-3">
@@ -67,7 +76,6 @@ const Profile = () => {
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     className="form-control"
-                    id="exampleInputEmail1"
                     placeholder="Enter Your Name"
                     autoFocus
                   />
@@ -78,8 +86,7 @@ const Profile = () => {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     className="form-control"
-                    id="exampleInputEmail1"
-                    placeholder="Enter Your Email "
+                    placeholder="Enter Your Email"
                     disabled
                   />
                 </div>
@@ -89,7 +96,6 @@ const Profile = () => {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     className="form-control"
-                    id="exampleInputPassword1"
                     placeholder="Enter Your Password"
                   />
                 </div>
@@ -99,7 +105,6 @@ const Profile = () => {
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                     className="form-control"
-                    id="exampleInputEmail1"
                     placeholder="Enter Your Phone"
                   />
                 </div>
@@ -109,7 +114,6 @@ const Profile = () => {
                     value={address}
                     onChange={(e) => setAddress(e.target.value)}
                     className="form-control"
-                    id="exampleInputEmail1"
                     placeholder="Enter Your Address"
                   />
                 </div>
