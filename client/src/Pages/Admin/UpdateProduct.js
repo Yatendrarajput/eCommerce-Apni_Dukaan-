@@ -106,7 +106,7 @@ const UpdateProduct = () => {
       
       if (!answer) return;
       const { data } = await axios.delete(
-        `/api/v1/product/delete-product/${id}`,
+        `/api/v1/product/delete-product//${id}`,
         {
           headers: {
             Authorization: `Bearer ${auth.token}` // Include the token in the headers
