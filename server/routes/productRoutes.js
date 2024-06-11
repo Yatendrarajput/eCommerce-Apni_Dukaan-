@@ -69,4 +69,9 @@ router.get('/product-list/:page',productListController);
 
 //category wise product
 router.get('/product-category/:slug',productCategoryController)
+//delete rproduct
+router.delete("/delete-product/:pid", deleteProductController);
+//filter
+router.post("/product-filters",productFiltersController);
+
 export default router;
