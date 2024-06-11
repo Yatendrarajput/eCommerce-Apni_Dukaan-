@@ -43,13 +43,10 @@ router.get("/get-product/:slug", getSingleProductController);
 //get photo
 router.get("/product-photo/:pid", productPhotoController);
 
-<<<<<<< HEAD
-=======
 //delete rproduct
 router.delete("/delete-product/:pid", deleteProductController);
 //filter
 router.post("/product-filters",productFiltersController);
->>>>>>> 1a0bd20ae6744349211b398295be98848389a36a
 //delete product
 router.delete("/product/:pid", deleteProductController);
 
