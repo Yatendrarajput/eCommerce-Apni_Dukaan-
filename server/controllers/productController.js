@@ -1,6 +1,7 @@
 import productModel from "../models/productModel.js";
 import fs from "fs";
 import slugify from "slugify";
+import categoryModel from "../models/categoryModel.js"
 
 export const createProductController = async (req, res) => {
   try {
@@ -277,7 +278,7 @@ export const productCountController = async (req, res) => {
 // product list base on page
 export const productListController = async (req, res) => {
   try {
-    const perPage = 2; //products shown per page
+    const perPage = 3; //products shown per page
     const page = req.params.page ? req.params.page : 1; //agar page nhi milta hai toh default page 1 hoga
     const products = await productModel
       .find({})
@@ -298,3 +299,26 @@ export const productListController = async (req, res) => {
     });
   }
 };
+
+//get product Cateogry
+
+export const productCategoryController = async(req,res) =>{
+  try {
+    const category = await categoryModel.findOne({
+      slug:req.params.slug
+    })
+    const products =await productModel.find({category}).populate('category')
+    res.status(200).send({
+      success:true,
+      category,
+      products,
+    })
+  } catch (error) {
+    console.log(error);
+    res.status(400).send({
+      success:false,
+      error,
+      message:'Error while Getting Products'
+    })
+  }
+}

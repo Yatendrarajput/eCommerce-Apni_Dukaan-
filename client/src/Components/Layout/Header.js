@@ -3,8 +3,13 @@ import { NavLink,Link } from 'react-router-dom';
 import { useAuth } from '../../context/auth';
 import toast from 'react-hot-toast';
 import SearchInput from './Form/searchInput';
+import useCategory from '../../hooks/useCategory';
+import { useCart } from '../../context/cart';
+import { Badge } from 'antd';
 const Header = () => {
+  const [cart]= useCart();
   const [auth,setAuth] = useAuth();
+  const categories =useCategory();
   const handleLogout =() =>{
     //on logging out, local storage ko clear krna h and jo bhi user token show kr rh h usse bhi empt krna h
     setAuth({
@@ -19,7 +24,7 @@ const Header = () => {
   };
   return (
     <>
-<nav className="navbar navbar-expand-lg bg-body-tertiary">
+<nav className="navbar navbar-expand-lg bg-body-tertiary " >
   <div className="container-fluid">
     <button className="navbar-toggler"
      type="button" 
@@ -32,7 +37,7 @@ const Header = () => {
     </button>
     <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
       <Link to='/' className="navbar-brand" >
-     
+      Shopfy
       </Link>
 
       <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
@@ -43,11 +48,27 @@ const Header = () => {
           </NavLink>
         </li>
         
-        <li className="nav-item">
-          <NavLink to='/Category' className="nav-link" >
-          Category
-          </NavLink>
-        </li>
+        <li className="nav-item dropdown">
+                <Link
+                  className="nav-link dropdown-toggle"
+                  to='/categories'
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  Categories
+                </Link>
+                <ul className="dropdown-menu">
+                <li>
+                  <Link className="dropdown-item" to={"/categories"}>
+                  All Categories
+                  </Link>
+                </li>
+                  {categories?.map((c) => (  
+                  <Link to={`/category/${c.slug}`} className="dropdown-item">{c.name}</Link>
+                  ))}
+                </ul>
+              </li>
+
        
 
        {
@@ -85,12 +106,13 @@ const Header = () => {
         </>)
        }
        
-        
-        <li className="nav-item">
-          <NavLink to='/Cart' className="nav-link" >
-          Cart[0]
-          </NavLink>
-        </li>
+       <li className="nav-item">
+                <NavLink to='/Cart' className="nav-link">
+                  <Badge count={cart?.length} showZero>
+                    Cart
+                  </Badge>
+                </NavLink>
+              </li>
       </ul>
     </div>
   </div>
