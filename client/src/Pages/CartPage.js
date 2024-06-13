@@ -12,7 +12,7 @@ const CartPage = () => {
   const [cart, setCart] = useCart(); 
   const [auth, setAuth] = useAuth();
   const[clientToken,setClientToken]=useState("");
-  const[instance,setinstance]=useState("");
+  const[instance,setInstance]=useState("");
   const[loading,setLoading]=useState(false);
   const navigate = useNavigate();
 
