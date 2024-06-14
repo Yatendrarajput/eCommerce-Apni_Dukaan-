@@ -1,5 +1,5 @@
 import express from 'express'
-import { registerController,loginController,testController, forgotPasswordController, updateProfileController } from '../controllers/authcontroller.js'; 
+import { registerController,loginController,testController, forgotPasswordController, updateProfileController, getOrdersController } from '../controllers/authcontroller.js'; 
 import { isAdmin,requireSignIn } from '../middleware/authMiddleware.js';
 //router object
 const router = express.Router()
@@ -29,5 +29,8 @@ router.get('/admin-auth', requireSignIn, isAdmin ,(req,res) => {
 
 // update profile
 router.put('/profile', requireSignIn, updateProfileController)
+
+// orders
+router.get('/orders', requireSignIn, getOrdersController)
 //there are two middlewares here in the fist one token is being checked, then admin is being checked
 export default router
