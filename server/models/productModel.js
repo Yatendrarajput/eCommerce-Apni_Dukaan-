@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const { Schema } = mongoose;
 
@@ -20,7 +20,7 @@ const productSchema = new Schema({
         required: true
     },
     category: {
-        type: Schema.Types.ObjectId, // Use Schema.Types.ObjectId for type
+        type: Schema.Types.ObjectId,
         ref: 'Category' // Reference to the 'Category' model
     },
     quantity: {
@@ -33,6 +33,7 @@ const productSchema = new Schema({
     },
     shipping: {
         type: Boolean,
+        default: false // Example default value
     }
 }, { timestamps: true });
 

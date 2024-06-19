@@ -78,9 +78,10 @@ router.delete("/delete-product/:pid", deleteProductController);
 router.post("/product-filters",productFiltersController);
 
 //payment routes
-//token
-router.get('/braintree/token',braintreeTokenController);
-//payment
-router.get('/braintree/payment', brainTreePaymentController);
+
+router.get("/braintree/token", braintreeTokenController);
+
+//payments
+router.post("/braintree/payment", requireSignIn, brainTreePaymentController);
 
 export default router;

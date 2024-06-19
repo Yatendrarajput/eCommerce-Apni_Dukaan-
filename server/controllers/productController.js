@@ -4,15 +4,17 @@ import slugify from "slugify";
 import categoryModel from "../models/categoryModel.js"
 import braintree from 'braintree';
 import dotenv from 'dotenv';
+import orderModel from "../models/orderModel.js";
 
 dotenv.config();
 //payment gateway
-var gateway = new braintree.BraintreeGateway({
+const gateway = new braintree.BraintreeGateway({
   environment: braintree.Environment.Sandbox,
   merchantId: process.env.BRAINTREE_MERCHANT_ID,
   publicKey: process.env.BRAINTREE_PUBLIC_KEY,
   privateKey: process.env.BRAINTREE_PRIVATE_KEY,
 });
+
 
 
 
@@ -340,7 +342,7 @@ export const productCategoryController = async(req,res) =>{
 //based on documentation
 export const braintreeTokenController = async (req, res) => {
   try {
-    gateway.clientToken.generate({}, function (err, response) {
+    gateway.clientToken.generate({}, (err, response) => {
       if (err) {
         res.status(500).send(err);
       } else {
@@ -349,39 +351,54 @@ export const braintreeTokenController = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
+    res.status(500).send({ error: 'Failed to generate client token' });
   }
 };
 
-//payment
+// Process payment
+
+
 export const brainTreePaymentController = async (req, res) => {
-  try {
-    const { nonce, cart } = req.body;
-    let total = 0;
-    cart.map((i) => {
-      total += i.price;
-    });
-    let newTransaction = gateway.transaction.sale(
-      {
-        amount: total,
-        paymentMethodNonce: nonce,
-        options: {
-          submitForSettlement: true,
-        },
-      },
-      function (error, result) {
-        if (result) {
-          const order = new orderModel({
-            products: cart,
-            payment: result,
-            buyer: req.user._id,
-          }).save();
-          res.json({ ok: true });
-        } else {
-          res.status(500).send(error);
-        }
-      }
-    );
-  } catch (error) {
-    console.log(error);
-  }
+    try {
+        const { nonce, cart } = req.body;
+        let total = 0;
+
+        // Calculate total amount from cart items
+        cart.forEach((item) => {
+            total += item.price;
+        });
+
+        // Use Braintree SDK to make transaction
+        gateway.transaction.sale(
+            {
+                amount: total,
+                paymentMethodNonce: nonce,
+                options: {
+                    submitForSettlement: true,
+                },
+            },
+            async (error, result) => {
+                if (error) {
+                    console.error(error);
+                    return res.status(500).send({ error: 'Transaction failed' });
+                }
+
+                // Save order using orderModel
+                try {
+                    const order = await new orderModel({
+                        products: cart,
+                        payment: result,
+                        buyer: req.user._id, // Assuming req.user is properly set in middleware
+                    }).save();
+                    res.json({ ok: true, order });
+                } catch (err) {
+                    console.error(err);
+                    res.status(500).send({ error: 'Failed to save order' });
+                }
+            }
+        );
+    } catch (error) {
+        console.error(error);
+        res.status(500).send({ error: 'Error processing payment' });
+    }
 };
