@@ -11,10 +11,13 @@ import {
   productFiltersController,
   productCountController,
   productListController,
-  productCategoryController
+  productCategoryController,
+  braintreeTokenController,
+  brainTreePaymentController
 } from "../controllers/productController.js";
 import { isAdmin, requireSignIn } from "../middleware/authMiddleware.js"
 import formidable from "express-formidable";
+import braintree from "braintree";
 
 const router = express.Router();
 
@@ -73,5 +76,12 @@ router.get('/product-category/:slug',productCategoryController)
 router.delete("/delete-product/:pid", deleteProductController);
 //filter
 router.post("/product-filters",productFiltersController);
+
+//payment routes
+
+router.get("/braintree/token", braintreeTokenController);
+
+//payments
+router.post("/braintree/payment", requireSignIn, brainTreePaymentController);
 
 export default router;
